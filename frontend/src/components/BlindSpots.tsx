@@ -6,7 +6,7 @@ export function BlindSpots({ rows, company }: { rows: QueryResult[]; company: st
       <section className="card">
         <h2>Blind spots</h2>
         <p className="muted">
-          None — there were no queries where a competitor appeared but {company} was absent. 🎉
+          None. There were no queries where a competitor appeared but {company} was absent.
         </p>
       </section>
     );

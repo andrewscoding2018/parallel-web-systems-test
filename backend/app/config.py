@@ -12,12 +12,9 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
 
-    # Parallel Web Systems credentials / endpoints.
+    # Parallel Web Systems credentials / SDK options.
     parallel_api_key: str = ""
-    parallel_base_url: str = "https://api.parallel.ai"
-    # Search has historically required a beta header; confirm the current value
-    # in the Search quickstart. Override via PARALLEL_SEARCH_BETA if it changes.
-    parallel_search_beta: str = "search-2025-06-01"
+    parallel_base_url: str | None = None
     # Task processor — "core" is reliable up to ~10 output fields.
     parallel_task_processor: str = "core"
 

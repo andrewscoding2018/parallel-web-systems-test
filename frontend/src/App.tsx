@@ -51,18 +51,11 @@ export default function App() {
 
   return (
     <div className="app">
-      <header className="hero">
-        <h1>AI Visibility Index</h1>
-        <p className="tagline">
-          How visible is a company to AI assistants — and where is it invisible? Buyers increasingly
-          ask an AI instead of Googling. This runs a company's category queries through the{" "}
-          <a href="https://parallel.ai" target="_blank" rel="noreferrer">
-            Parallel
-          </a>{" "}
-          Search API — the same kind of web context assistants consume — and measures where it
-          surfaces versus its competitors.
-        </p>
-
+      <header className="topbar">
+        <div className="brand">
+          <h1>AI Visibility Index</h1>
+          <p>Search a company domain to measure AI search visibility.</p>
+        </div>
         <form className="run-form" onSubmit={handleRun}>
           <input
             type="text"
@@ -78,7 +71,7 @@ export default function App() {
           {!domain && (
             <button
               type="button"
-              className="link-btn"
+              className="ghost-btn"
               onClick={() => setDomain(EXAMPLE)}
               disabled={busy}
             >
@@ -86,31 +79,34 @@ export default function App() {
             </button>
           )}
         </form>
-
-        <Progress stage={stage} />
       </header>
 
-      {error && (
-        <div className="card error-card">
-          <strong>Something went wrong.</strong>
-          <p>{error}</p>
-        </div>
-      )}
+      <main className="results">
+        <Progress stage={stage} />
 
-      {scan && (
-        <>
-          <ScoreCard score={scan.score} />
-          <BlindSpots rows={scan.blind_spots} company={scan.company} />
-          <QueryTable rows={scan.per_query} company={scan.company} />
-        </>
-      )}
+        {error && (
+          <div className="card error-card">
+            <strong>Something went wrong.</strong>
+            <p>{error}</p>
+          </div>
+        )}
 
-      {profile && <ProfilePanel data={profile} />}
+        {!profile && !scan && !error && stage === "idle" && (
+          <section className="empty-state">
+            <p>Enter a domain to generate buyer queries, competitors, and a visibility score.</p>
+          </section>
+        )}
 
-      <footer className="footer">
-        Built on the Parallel Web Systems API. Stage 1 (deep dive) uses the Task API; Stage 2
-        (comparison) uses the Search API. Evidence-first: sources and the scoring formula are shown.
-      </footer>
+        {scan && (
+          <>
+            <ScoreCard score={scan.score} />
+            <BlindSpots rows={scan.blind_spots} company={scan.company} />
+            <QueryTable rows={scan.per_query} company={scan.company} />
+          </>
+        )}
+
+        {profile && <ProfilePanel data={profile} />}
+      </main>
     </div>
   );
 }
@@ -118,8 +114,8 @@ export default function App() {
 function Progress({ stage }: { stage: Stage }) {
   if (stage === "idle" || stage === "error" || stage === "done") return null;
   const steps = [
-    { key: "profiling", label: "Deep dive — generating buyer queries & competitors (Task API)" },
-    { key: "scanning", label: "Topical comparison — running searches & scoring (Search API)" },
+    { key: "profiling", label: "Generating buyer queries and competitors" },
+    { key: "scanning", label: "Searching and scoring visibility" },
   ];
   return (
     <div className="progress">

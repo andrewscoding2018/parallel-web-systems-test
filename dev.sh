@@ -4,17 +4,14 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 
-if [[ -z "${PARALLEL_API_KEY:-}" ]]; then
+if [[ -z "${PARALLEL_API_KEY:-}" ]] && ! grep -q '^PARALLEL_API_KEY=' backend/.env 2>/dev/null; then
   echo "PARALLEL_API_KEY is not set. Add it to backend/.env or export it." >&2
 fi
 
 # Backend
 (
   cd backend
-  [[ -d .venv ]] || python3 -m venv .venv
-  . .venv/bin/activate
-  pip install -q -r requirements.txt
-  uvicorn app.main:app --reload --port 8000
+  uv run --with-requirements requirements.txt uvicorn app.main:app --reload --port 8000
 ) &
 BACKEND_PID=$!
 
