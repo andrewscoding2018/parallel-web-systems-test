@@ -38,6 +38,9 @@ export default function App() {
       setStage("scanning");
       const result = await runScan({
         domain: d,
+        // Use the brand name the deep dive discovered (e.g. "Torrey Hills
+        // Technologies") so third-party mentions match. Empty -> backend derives.
+        company_name: prof.profile.company_name ?? undefined,
         buyer_queries: prof.profile.buyer_queries,
         competitors: prof.profile.competitors,
       });

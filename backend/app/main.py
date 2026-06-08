@@ -52,6 +52,7 @@ async def profile(req: ProfileRequest) -> ProfileResponse:
     return ProfileResponse(
         domain=req.domain,
         profile=CompanyProfile(
+            company_name=raw.get("company_name"),
             one_liner=raw.get("one_liner"),
             product_lines=raw.get("product_lines", []),
             buyer_queries=raw.get("buyer_queries", []),
