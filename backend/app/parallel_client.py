@@ -25,6 +25,14 @@ PROFILE_SCHEMA: dict = {
     "json_schema": {
         "type": "object",
         "properties": {
+            "company_name": {
+                "type": "string",
+                "description": (
+                    "The company's brand name as third parties write it, e.g. "
+                    "'Torrey Hills Technologies' — not the bare domain. Used to detect "
+                    "mentions on third-party pages."
+                ),
+            },
             "one_liner": {
                 "type": "string",
                 "description": "What the company makes, plainly.",

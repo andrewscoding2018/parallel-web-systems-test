@@ -12,6 +12,7 @@ class ProfileRequest(BaseModel):
 
 
 class CompanyProfile(BaseModel):
+    company_name: str | None = None
     one_liner: str | None = None
     product_lines: list[str] = Field(default_factory=list)
     buyer_queries: list[str] = Field(default_factory=list)

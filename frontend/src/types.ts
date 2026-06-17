@@ -1,6 +1,7 @@
 // Mirrors the FastAPI response models.
 
 export interface CompanyProfile {
+  company_name: string | null;
   one_liner: string | null;
   product_lines: string[];
   buyer_queries: string[];
