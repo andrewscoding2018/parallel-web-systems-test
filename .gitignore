@@ -21,3 +21,6 @@ frontend/dist/
 *.pem
 .idea/
 .vscode/
+
+# Generated sweep/experiment outputs
+out/
